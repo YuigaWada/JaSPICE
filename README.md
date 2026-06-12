@@ -2,9 +2,51 @@
 [![Lint](https://github.com/keio-smilab23/JaSPICE/actions/workflows/lint.yaml/badge.svg)](https://github.com/keio-smilab23/JaSPICE/actions/workflows/lint.yaml)
 [![Test](https://github.com/keio-smilab23/JaSPICE/actions/workflows/test.yaml/badge.svg)](https://github.com/keio-smilab23/JaSPICE/actions/workflows/test.yaml)
 
-
 - Accepted at CoNLL23
 - [arXiv paper](https://arxiv.org/abs/2311.04192)
+
+## 🎉🎉 News
+
+- 2026-06-13: JaSPICE is now supported in [CaptionEvalKit-for-VLMs](https://github.com/YuigaWada/CaptionEvalKit-for-VLMs), a reproducible caption-evaluation toolkit. You can run JaSPICE with a single command!
+
+### How to use JaSPICE with CaptionEvalKit-for-VLMs?
+
+```python
+import json
+import capevalkit as capeval
+
+results = capeval.evaluate_captions(
+    metrics=["jaspice"],
+    pairs=[
+        {
+            "id": "sample-1",
+            "image": "unused.jpg",
+            "caption": "眼鏡をかけた女性が青い携帯電話を操作している",
+            "references": [
+                "メガネをかけた女性が携帯電話を操作している",
+                "女性が青いスマートフォンを片手に持っている",
+                "携帯電話を触っている女性である",
+                "眼鏡をかけた女性がスマートフォンを持っている",
+                "女性はスマートフォンを見ている",
+            ],
+        },
+    ],
+    output_dir="outputs/jaspice-smoke",
+)
+
+print(json.dumps(results["jaspice"], ensure_ascii=False, indent=2))
+
+>>> {
+  "JaSPICE": {
+    "per_item": {
+      "sample-1": 0.5555555555555556
+    },
+    "score": 0.5555555555555556
+  }
+}
+```
+
+
 
 *Image captioning studies heavily rely on automatic evaluation metrics such as BLEU and METEOR. However, such n-gram-based metrics have been shown to correlate poorly with human evaluation, leading to the proposal of alternative metrics such as SPICE for English; however, no equivalent metrics have been established for other languages. Therefore, in this study, we propose an automatic evaluation metric called JaSPICE, which evaluates Japanese captions based on scene graphs. The proposed method generates a scene graph from dependencies and the predicate-argument structure, and extends the graph using synonyms. We conducted experiments employing 10 image captioning models trained on STAIR Captions and PFN-PIC and constructed the Shichimi dataset, which contains 103,170 human evaluations. The results showed that our metric outperformed the baseline metrics for the correlation coefficient with the human evaluation.*
 
