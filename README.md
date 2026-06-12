@@ -11,6 +11,10 @@
 
 ### How to use JaSPICE with CaptionEvalKit-for-VLMs?
 
+```bash
+pip install capevalkit
+```
+
 ```python
 import json
 import capevalkit as capeval
